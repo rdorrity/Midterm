@@ -52,8 +52,6 @@ def gamefy(pic):
       newG = g/boxDivider
       newB = b/boxDivider
       
-      
-      
       iX = x
       iY = y
       for iX in range(x, x+boxSize):
