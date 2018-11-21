@@ -5,25 +5,37 @@
 #################################################
 
 
+#################################################
+# return picture
+#################################################
 def getPic():
   return makePicture(pickAFile())
   
-
+#################################################
+# Creates a CSUMB color effect to a photo
+#################################################
 def csumbfy(pic):  
+  filename = "csumbfy" + ".jpg" 
   for x in range (0, getWidth(pic)):
     for y in range (0, getHeight(pic)):
       px = getPixel(pic, x, y)
       r = getRed(px)
       g = getGreen(px)
       b = getBlue(px)
-      if distance(makeColor(28, 129, 64), getColor(px)) < 200:
-        setColor(px, makeColor(abs(r+28)/2, abs(g+129)/2, abs(b+64)/2))
-      if distance(makeColor(0, 42, 78), getColor(px)) < 200:
-        setColor(px, makeColor(abs(r+0)/2, abs(g+42)/2, abs(b+78)/2))
-      if distance(makeColor(41, 126, 159), getColor(px)) < 200:
-        setColor(px, makeColor(abs(r+41)/2, abs(g+126)/2, abs(b+159)/2))
+      
+      if x < (getWidth(pic)/3):
+        setColor(px, makeColor(r*.9, g*.6, b*.5))
+      elif x >= (getWidth(pic)/3) and x < (getWidth(pic)/3)*2:
+        setColor(px, makeColor(r*.5, g, b*.5))
+      elif x >= (getWidth(pic)/3)*2:
+        setColor(px, makeColor(r*.1, g*.5, b))
+      
   show(pic)
-
+  #writePictureTo(pic, "C:\\Users\\rdorr\\OneDrive\\CSUMB\\CST 205\\Pictures\\" + filename)
+ 
+#################################################
+# Changes photo to a 64 color effect
+################################################# 
 def color64(pic):
   pixels = getPixels(pic)
   keys = [0,85,170,255]
@@ -39,6 +51,10 @@ def color64(pic):
   #writePic(pic, "\CGA_LastTest3.jpg")
   return pic
 
+
+#################################################
+# Color effect
+#################################################
 def cmk(pic):
   pixels = getPixels(pic)
   keys = [0,255]
@@ -59,10 +75,13 @@ def cmk(pic):
   return pic
 
 
+#################################################
+# Creates a box pixel effect
+#################################################
 def gamefy(pic):
   boxSize = input("Enter the number of pixels to consolidate:")
   boxDivider = boxSize**2
-  #filename = "8bitRyan" + str(boxSize) + ".jpg"  
+  filename = "gamefy" + str(boxSize) + ".jpg"  
   #filename = "\TestElise-CMK-" + str(boxSize) + ".jpg"
   for x in range (0, getWidth(pic), boxSize):
     for y in range (0, getHeight(pic), boxSize):
