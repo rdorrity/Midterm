@@ -15,24 +15,51 @@ def getPic():
 # Creates a CSUMB color effect to a photo
 #################################################
 def csumbfy(pic):  
+  canvas = simpleCopy(pic)  
   filename = "csumbfy" + ".jpg" 
-  for x in range (0, getWidth(pic)):
-    for y in range (0, getHeight(pic)):
-      px = getPixel(pic, x, y)
+  for x in range (0, getWidth(canvas)):
+    for y in range (0, getHeight(canvas)):
+      px = getPixel(canvas, x, y)
       r = getRed(px)
       g = getGreen(px)
       b = getBlue(px)
       
-      if x < (getWidth(pic)/3):
+      if x < (getWidth(canvas)/3):
         setColor(px, makeColor(r*.9, g*.6, b*.5))
-      elif x >= (getWidth(pic)/3) and x < (getWidth(pic)/3)*2:
+      elif x >= (getWidth(canvas)/3) and x < (getWidth(canvas)/3)*2:
         setColor(px, makeColor(r*.5, g, b*.5))
-      elif x >= (getWidth(pic)/3)*2:
+      elif x >= (getWidth(canvas)/3)*2:
         setColor(px, makeColor(r*.1, g*.5, b))
-      
-  show(pic)
-  #writePictureTo(pic, "C:\\Users\\rdorr\\OneDrive\\CSUMB\\CST 205\\Pictures\\" + filename)
+
+  canvas = mblogo(getPic(), canvas)   
+  show(canvas)
+  writePictureTo(canvas, "C:\\Users\\rdorr\\OneDrive\\CSUMB\\CST 205\\Pictures\\" + filename)
+
+############################################
+# Parameters: pic is a greenscreen image, back is 
+# the background image. 
+def mblogo(pic, back):  
+  for x in range (0, getWidth(pic)):
+    for y in range(0, getHeight(pic)):
+      color = getColor(getPixel(pic, x, y))
+      setColor(getPixel(back, x, y), color)
+
+  #show(pic)
+  return back  
+
+# Makes empty picture
+def simpleCopy(pic):
+  width = getWidth(pic)
+  height = getHeight(pic)
+  canvas = makeEmptyPicture(width, height)
+  for x in range (0, width):
+    for y in range (0, height):
+      color = getColor(getPixel(pic, x, y))
+      setColor(getPixel(canvas, x, y), color)
+
+  return canvas
  
+     
 #################################################
 # Changes photo to a 64 color effect
 ################################################# 
